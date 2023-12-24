@@ -19,12 +19,16 @@ class Trip extends Model
 
     protected $table = 'trips';
 
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'trip_id');
+    }
 
     public function fromLocation()
     {
         return $this->belongsTo(Location::class, 'from', 'id');
     }
-    
+
     public function toLocation()
     {
         return $this->belongsTo(Location::class, 'to', 'id');

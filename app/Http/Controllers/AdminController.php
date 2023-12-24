@@ -42,20 +42,17 @@ class AdminController extends Controller
     }
 
 
+
+
+
+
     public function delete($id)
     {
-        // Find the Trip record by ID
         $trip = Trip::find($id);
-
-        // Check if the record exists
         if (!$trip) {
             return redirect('/admin')->with('error', 'Trip not found.');
         }
-
-        // Perform the deletion
         $trip->delete();
-
-        // Redirect with a success message
         return redirect('/admin')->with('success', 'Trip deleted successfully!');
     }
 

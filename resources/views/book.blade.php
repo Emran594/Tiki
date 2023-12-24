@@ -7,12 +7,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Make Trip</h4>
+                    <h4 class="mb-sm-0">Make Booking</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                            <li class="breadcrumb-item active">Make Trip</li>
+                            <li class="breadcrumb-item active">Make Booking</li>
                         </ol>
                     </div>
 
@@ -29,13 +29,13 @@
                         <div class="row g-4 align-items-center">
                             <div class="col-sm">
                                 <div>
-                                    <h5 class="card-title mb-0">TRIP List</h5>
+                                    <h5 class="card-title mb-0">Booking List</h5>
                                 </div>
                             </div>
                             <div class="col-sm-auto">
                                 <div class="d-flex flex-wrap align-items-start gap-2">
                                     <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                    <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add Trip </button>
+                                    <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add Booking </button>
                                 </div>
                             </div>
                         </div>
@@ -93,31 +93,25 @@
                                                     <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                                 </div>
                                             </th>
-                                            <th class="sort" data-sort="customer_name">Title</th>
-                                            <th class="sort" data-sort="phone">Start Location</th>
-                                            <th class="sort" data-sort="date">Destination</th>
-                                            <th class="sort" data-sort="email">Remaining Seat</th>
-                                            <th class="sort" data-sort="status">Status</th>
+                                            <th class="sort" data-sort="customer_name">User Name</th>
+                                            <th class="sort" data-sort="phone">Phone Number</th>
+                                            <th class="sort" data-sort="date">Trip name</th>
+                                            <th class="sort" data-sort="email">Booked Seat</th>
                                             <th class="sort" data-sort="action">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list form-check-all">
-                                        @foreach ($trips as $trip)
+                                        @foreach ($Bookings as $Booking)
                                             <tr>
                                                 <th scope="row">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
                                                     </div>
                                                 </th>
-                                                <td class="customer_name">{{ $trip->title }}</td>
-                                                <td class="phone">{{ $trip->fromLocation->location_name }}</td>
-                                                <td class="date">{{ $trip->toLocation->location_name }}</td>
-                                                <td class="email">{{ $trip->seats }}</td>
-                                                <td class="status">
-                                                    <span class="badge bg-success-subtle text-success text-uppercase">
-                                                        {{ $trip->status == 1 ? 'Active' : 'Inactive' }}
-                                                    </span>
-                                                </td>
+                                                <td class="customer_name">{{ $Booking->name }}</td>
+                                                <td class="phone">{{ $Booking->phone }}</td>
+                                                <td class="date">{{ $Booking->trip->title }}</td>
+                                                <td class="email">{{ $Booking->booked_seat }}</td>
                                                 <td>
                                                     <ul class="list-inline hstack gap-2 mb-0">
                                                         <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
@@ -126,14 +120,13 @@
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <form method="POST" action="/admin/delete/{{ $trip->id }}" style="display:inline;">
+                                                            <form method="POST" action="/admin/delete/{{ $Booking->id }}" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="text-danger d-inline-block remove-item-btn">
                                                                     <i class="ri-delete-bin-5-fill fs-16"></i>
                                                                 </button>
                                                             </form>
-
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -143,14 +136,15 @@
                                 </table>
 
 
+
                                 <div class="noresult" style="display: none">
                                     <div class="text-center">
                                         <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#25a0e2,secondary:#00bd9d" style="width:75px;height:75px">
                                         </lord-icon>
                                         <h5 class="mt-2">Sorry! No Result Found</h5>
-                                        <p class="text-muted mb-0">We've searched more than 150+ Make Trip
+                                        <p class="text-muted mb-0">We've searched more than 150+ Make Booking
                                             We did not find any
-                                            Make Trip for you search.</p>
+                                            Make Booking for you search.</p>
                                     </div>
                                 </div>
                             </div>
@@ -173,52 +167,36 @@
                                         <h5 class="modal-title" id="exampleModalLabel"></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                     </div>
-                                    <form class="tablelist-form" action="{{'/admin/create'}}" method="POST" autocomplete="off">
+                                    <form class="tablelist-form" action="{{'/booking/create'}}" method="POST" autocomplete="off">
                                         @csrf
                                         <div class="modal-body">
                                             <input type="hidden" id="id-field" />
                                             <div class="mb-3">
-                                                <label for="customername-field" class="form-label">Trip Name</label>
-                                                <input type="text" name="title" id="customername-field" class="form-control" placeholder="Enter Trip Name" required />
+                                                <label for="customername-field" class="form-label">User Name</label>
+                                                <input type="text" name="name" id="customername-field" class="form-control" placeholder="Enter Booking Name" required />
                                             </div>
                                             <div class="mb-3">
-                                                <label for="date-field" class="form-label">Trip Date</label>
-                                                <input type="date" name="date" id="date-field" class="form-control" data-provider="flatpickr" data-date-format="d M, Y" required placeholder="Select date" />
+                                                <label for="date-field" class="form-label">Phone Number</label>
+                                                <input type="text" name="phone" id="date-field" class="form-control" data-provider="flatpickr" data-date-format="d M, Y" required placeholder="Phone Number" />
                                             </div>
                                             <div class="mb-3">
-                                                <label for="status-field" class="form-label">From Location</label>
-                                                <select class="form-control" data-choices data-choices-search-false id="status-field" name="from"  required>
-                                                    @foreach ($location as $item)
-                                                    <option value="{{ $item['id'] }}">{{ $item['location_name'] }} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="status-field" class="form-label">Destination Location</label>
-                                                <select class="form-control" data-choices data-choices-search-false name="to" id="status-field"  required>
-                                                    @foreach ($location as $item)
-                                                    <option value="{{ $item['id'] }}">{{ $item['location_name'] }} </option>
+                                                <label for="status-field" class="form-label">Trip Name</label>
+                                                <select class="form-control" data-choices data-choices-search-false id="status-field" name="trip_name"  required>
+                                                    @foreach ($trip as $item)
+                                                    <option value="{{ $item['id'] }}">{{ $item['title'] }} </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="customername-field" class="form-label">Number Of Seats</label>
-                                                <input type="text" id="customername-field" class="form-control" name="seats" placeholder="Number Of seat in this trip" required />
+                                                <input type="text" id="customername-field" class="form-control" name="booked_seat" placeholder="Number Of seat in this Booking" required />
                                                 <div class="invalid-feedback">Seat number.</div>
-                                            </div>
-
-                                            <div>
-                                                <label for="status-field" class="form-label">Status</label>
-                                                <select class="form-control" data-choices data-choices-search-false id="status-field" name="status"  required>
-                                                    <option value="1">Active</option>
-                                                    <option value="2">In Active</option>
-                                                </select>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <div class="hstack gap-2 justify-content-end">
                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-success" id="add-btn">Add Trip </button>
+                                                <button type="submit" class="btn btn-success" id="add-btn">Add Booking </button>
                                             </div>
                                         </div>
                                     </form>

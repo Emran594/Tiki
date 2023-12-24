@@ -41,7 +41,7 @@
                               <a href="{{ '/admin' }}" class="nav-link" data-key="t-analytics"> Admin </a>
                           </li>
                           <li class="nav-item">
-                              <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics"> User </a>
+                              <a href="{{ '/booking' }}" class="nav-link" data-key="t-analytics"> Book A Seat </a>
                           </li>
                       </ul>
                   </div>

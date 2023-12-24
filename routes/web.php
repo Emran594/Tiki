@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,7 @@ Route::get('/', function () {
 Route::get('/admin',[AdminController::class,'index']);
 Route::post('/admin/create',[AdminController::class,'create'])->name('admin.create');
 Route::delete('/admin/delete/{id}',[AdminController::class,'delete'])->name('admin.delete');
+
+
+Route::get('/booking',[BookingController::class,'index']);
+Route::post('/booking/create',[BookingController::class,'create'])->name('booking.create');
