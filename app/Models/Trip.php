@@ -21,8 +21,9 @@ class Trip extends Model
 
     public function bookings()
     {
-        return $this->hasMany(Booking::class, 'trip_id');
+        return $this->hasMany(Booking::class, 'title', 'trip_name');
     }
+
 
     public function fromLocation()
     {

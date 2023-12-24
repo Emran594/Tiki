@@ -120,7 +120,7 @@
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <form method="POST" action="/admin/delete/{{ $Booking->id }}" style="display:inline;">
+                                                            <form method="POST" action="/book/delete/{{ $Booking->id }}" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="text-danger d-inline-block remove-item-btn">
