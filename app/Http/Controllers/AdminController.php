@@ -59,7 +59,4 @@ class AdminController extends Controller
         return redirect('/admin')->with('success', 'Trip deleted successfully!');
     }
 
-
-
-
 }
