@@ -28,3 +28,4 @@ Route::delete('/admin/delete/{id}',[AdminController::class,'delete'])->name('adm
 Route::get('/booking',[BookingController::class,'index']);
 Route::post('/booking/create',[BookingController::class,'create'])->name('booking.create');
 Route::delete('/book/delete/{id}',[BookingController::class,'delete'])->name('booking.delete');
+Route::get('/view/{id}',[BookingController::class,'view'])->name('view');

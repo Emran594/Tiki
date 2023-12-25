@@ -52,6 +52,10 @@ class BookingController extends Controller
         return redirect('/booking')->with('success', 'Booking created successfully!');
     }
 
+    public function view($id){
+        $single = Booking::with('trip')->find($id);
+        return view('view',compact('single'));
+    }
 
     public function delete($id)
     {

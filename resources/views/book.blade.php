@@ -120,6 +120,13 @@
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
+                                                            <form method="GET" action="{{ route('view', ['id' => $Booking->id]) }}" style="display:inline;">
+                                                                <button type="submit" class="text-danger d-inline-block remove-item-btn">
+                                                                    <i class="ri-eye-line"></i>
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                        <li class="list-inline-item">
                                                             <form method="POST" action="/book/delete/{{ $Booking->id }}" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')
